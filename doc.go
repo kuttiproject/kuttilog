@@ -1,4 +1,4 @@
-// Package kuttilog implements a simple leveled logging system.
+// Package kuttilog implements a simple levelled logging system.
 // The SetLevel function sets the current level. The Print,
 // Printf and Println functions all take a level parameter, and
 // only log if it is less than or equal to the current level.
