@@ -16,7 +16,7 @@ type defaultlogger struct {
 }
 
 func (d defaultlogger) MaxLevel() int {
-	return Verbose
+	return Debug
 }
 
 func (d defaultlogger) LevelPrefix(level int) string {
