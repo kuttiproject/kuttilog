@@ -1,5 +1,10 @@
 package kuttilog
 
+import (
+	"log"
+	"os"
+)
+
 // Default Log levels
 const (
 	Quiet   = 0
@@ -10,8 +15,11 @@ const (
 )
 
 var (
-	loglevel int = Info
-	logger   Logger
+	loglevel      = Info
+	logger        Logger
+	defaultLogger = &defaultlogger{
+		log: log.New(os.Stdout, "", 0),
+	}
 )
 
 // MaxLevel returns the highest level permitted by the current logger.
@@ -74,7 +82,7 @@ func SetLogger(l Logger) {
 
 // ResetLogger resets to the default logger.
 func ResetLogger() {
-	logger = &defaultlogger{}
+	logger = defaultLogger
 }
 
 func init() {

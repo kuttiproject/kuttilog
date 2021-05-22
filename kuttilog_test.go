@@ -1,9 +1,7 @@
 package kuttilog_test
 
 import (
-	"bytes"
 	"fmt"
-	"log"
 	"testing"
 
 	"github.com/kuttiproject/kuttilog"
@@ -266,34 +264,4 @@ func TestPrintln(t *testing.T) {
 		}
 	}
 	kuttilog.ResetLogger()
-}
-
-func TestDefaultlogger(t *testing.T) {
-	t.Log("Testing Default Logger...")
-
-	var buf bytes.Buffer
-	log.SetOutput(&buf)
-
-	kuttilog.Print(2, "Hello")
-	if buf.String() != " Hello\n" {
-		t.Errorf("\nDefault Logger Print error:\n  Expected: %#v\n  Got: %#v",
-			" Hello\n",
-			buf.String())
-	}
-
-	buf.Reset()
-	kuttilog.Println(2, "Hello")
-	if buf.String() != " Hello\n" {
-		t.Errorf("\nDefault Logger Print error:\n  Expected: %#v\n  Got: %#v",
-			" Hello\n",
-			buf.String())
-	}
-
-	buf.Reset()
-	kuttilog.Printf(4, "Hello %v", 42)
-	if buf.String() != "[DEBUG]Hello 42\n" {
-		t.Errorf("\nDefault Logger Print error:\n  Expected: %#v\n  Got: %#v",
-			"[DEBUG]Hello 42\n",
-			buf.String())
-	}
 }

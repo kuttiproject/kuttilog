@@ -1,40 +1,37 @@
 package kuttilog
 
-import "log"
-
-var (
-	levelprefixes = []string{
-		"",
-		"",
-		"",
-		"[Verbose]",
-		"[DEBUG]",
-	}
+import (
+	"log"
 )
 
-type defaultlogger struct {
+var levelprefixes = []string{
+	"",
+	"",
+	"",
+	"[Verbose]",
+	"[DEBUG]",
 }
 
-func (d defaultlogger) MaxLevel() int {
+type defaultlogger struct {
+	log *log.Logger
+}
+
+func (d *defaultlogger) MaxLevel() int {
 	return Debug
 }
 
-func (d defaultlogger) LevelPrefix(level int) string {
+func (d *defaultlogger) LevelPrefix(level int) string {
 	return levelprefixes[level]
 }
 
-func (d defaultlogger) Print(v ...interface{}) {
-	log.Println(v...)
+func (d *defaultlogger) Print(v ...interface{}) {
+	d.log.Println(v...)
 }
 
-func (d defaultlogger) Printf(format string, v ...interface{}) {
-	log.Printf(format, v...)
+func (d *defaultlogger) Printf(format string, v ...interface{}) {
+	d.log.Printf(format, v...)
 }
 
-func (d defaultlogger) Println(v ...interface{}) {
-	log.Println(v...)
-}
-
-func init() {
-	log.SetFlags(0)
+func (d *defaultlogger) Println(v ...interface{}) {
+	d.log.Println(v...)
 }
