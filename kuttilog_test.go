@@ -215,30 +215,30 @@ func TestPrintln(t *testing.T) {
 	t.Log("Testing Println()")
 
 	// Println will ALWAYS add a space between the label prefix and the
-	// value printed
+	// value printed. This needs correction now.
 	testprintlntable := []struct {
 		setlevel   int
 		level      int
 		inputtext  string
 		outputtext string
 	}{
-		{setlevel: 2, level: 0, inputtext: "Hello", outputtext: " Hello\n"},
-		{setlevel: 2, level: 1, inputtext: "Hello", outputtext: " Hello\n"},
-		{setlevel: 2, level: 2, inputtext: "Hello", outputtext: " Hello\n"},
+		{setlevel: 2, level: 0, inputtext: "Hello", outputtext: "Hello\n"},
+		{setlevel: 2, level: 1, inputtext: "Hello", outputtext: "Hello\n"},
+		{setlevel: 2, level: 2, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 2, level: 3, inputtext: "Hello", outputtext: ""},
 		{setlevel: 2, level: 4, inputtext: "Hello", outputtext: ""},
 		{setlevel: 2, level: 5, inputtext: "Hello", outputtext: ""},
 		{setlevel: 2, level: -1, inputtext: "Hello", outputtext: ""},
-		{setlevel: 0, level: 0, inputtext: "Hello", outputtext: " Hello\n"},
+		{setlevel: 0, level: 0, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 0, level: 1, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 2, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 3, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 4, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 5, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: -1, inputtext: "Hello", outputtext: ""},
-		{setlevel: 4, level: 0, inputtext: "Hello", outputtext: " Hello\n"},
-		{setlevel: 4, level: 1, inputtext: "Hello", outputtext: " Hello\n"},
-		{setlevel: 4, level: 2, inputtext: "Hello", outputtext: " Hello\n"},
+		{setlevel: 4, level: 0, inputtext: "Hello", outputtext: "Hello\n"},
+		{setlevel: 4, level: 1, inputtext: "Hello", outputtext: "Hello\n"},
+		{setlevel: 4, level: 2, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 4, level: 3, inputtext: "Hello", outputtext: "[V] Hello\n"},
 		{setlevel: 4, level: 4, inputtext: "Hello", outputtext: "[D] Hello\n"},
 		{setlevel: 4, level: 5, inputtext: "Hello", outputtext: ""},

@@ -46,33 +46,42 @@ func V(level int) bool {
 	return level <= loglevel && level >= 0
 }
 
+func printWith(printfunc func(...interface{}), level int, v ...interface{}) {
+	if V(level) {
+		prefix := logger.LevelPrefix(level)
+		if prefix != "" {
+			output := append([]interface{}{logger.LevelPrefix(level)}, v...)
+			printfunc(output...)
+		} else {
+			printfunc(v...)
+		}
+	}
+}
+
 // Print prints to the log, if the level is <= current log level.
 // Arguments are handled in the manner of fmt.Print.
 func Print(level int, v ...interface{}) {
-	if V(level) {
-		output := append([]interface{}{logger.LevelPrefix(level)}, v...)
-		logger.Print(output...)
-	}
+	printWith(logger.Print, level, v...)
 }
 
 // Printf prints to the log, if the level is <= current log level.
 // Arguments are handled in the manner of fmt.Printf.
 func Printf(level int, format string, v ...interface{}) {
 	if V(level) {
-		output := append([]interface{}{logger.LevelPrefix(level)}, v...)
-		logger.Printf("%v"+format, output...)
+		prefix := logger.LevelPrefix(level)
+		if prefix != "" {
+			output := append([]interface{}{logger.LevelPrefix(level)}, v...)
+			logger.Printf("%v"+format, output...)
+		} else {
+			logger.Printf(format, v...)
+		}
 	}
 }
 
 // Println prints to the log, if the level is <= current log level.
 // Arguments are handled in the manner of fmt.Println.
-// There will always be a space printed before the first argument,
-// after the label prefix if any.
 func Println(level int, v ...interface{}) {
-	if V(level) {
-		output := append([]interface{}{logger.LevelPrefix(level)}, v...)
-		logger.Println(output...)
-	}
+	printWith(logger.Println, level, v...)
 }
 
 // SetLogger sets the current logger.

@@ -14,18 +14,29 @@ func TestDefaultlogger(t *testing.T) {
 	var buf bytes.Buffer
 	defaultLogger.log.SetOutput(&buf)
 
+	// Test Print
 	Print(Info, "Hello")
-	if buf.String() != " Hello\n" {
+	if buf.String() != "Hello\n" {
 		t.Errorf("\nDefault Logger Print error:\n  Expected: %#v\n  Got: %#v",
-			" Hello\n",
+			"Hello\n",
 			buf.String())
 	}
 
+	// Test Printf
+	buf.Reset()
+	Printf(Info, "%v", "Hello")
+	if buf.String() != "Hello\n" {
+		t.Errorf("\nDefault Logger Printf error:\n  Expected: %#v\n  Got: %#v",
+			"Hello\n",
+			buf.String())
+	}
+
+	// Test Println
 	buf.Reset()
 	Println(Info, "Hello")
-	if buf.String() != " Hello\n" {
-		t.Errorf("\nDefault Logger Print error:\n  Expected: %#v\n  Got: %#v",
-			" Hello\n",
+	if buf.String() != "Hello\n" {
+		t.Errorf("\nDefault Logger Println error:\n  Expected: %#v\n  Got: %#v",
+			"Hello\n",
 			buf.String())
 	}
 
