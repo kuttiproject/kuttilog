@@ -42,14 +42,16 @@ func TestV(t *testing.T) {
 		{setlevel: 2, level: 3, result: false},
 		{setlevel: 2, level: 4, result: false},
 		{setlevel: 2, level: 5, result: false},
-		{setlevel: 2, level: -1, result: false},
+		{setlevel: 2, level: -2, result: false},
+		{setlevel: 2, level: -1, result: true},
 		{setlevel: 1, level: 0, result: true},
 		{setlevel: 1, level: 1, result: true},
 		{setlevel: 1, level: 2, result: false},
 		{setlevel: 1, level: 3, result: false},
 		{setlevel: 1, level: 4, result: false},
 		{setlevel: 1, level: 5, result: false},
-		{setlevel: 1, level: -1, result: false},
+		{setlevel: 1, level: -2, result: false},
+		{setlevel: 1, level: -1, result: true},
 	}
 
 	for _, testrow := range testvtable {
@@ -87,6 +89,9 @@ func (d *testlogger) MaxLevel() int {
 }
 
 func (d *testlogger) LevelPrefix(level int) string {
+	if level == -1 {
+		return ""
+	}
 	return testloggerlevelprefixes[level]
 }
 
@@ -119,21 +124,24 @@ func TestPrint(t *testing.T) {
 		{setlevel: 2, level: 3, inputtext: "Hello", outputtext: ""},
 		{setlevel: 2, level: 4, inputtext: "Hello", outputtext: ""},
 		{setlevel: 2, level: 5, inputtext: "Hello", outputtext: ""},
-		{setlevel: 2, level: -1, inputtext: "Hello", outputtext: ""},
+		{setlevel: 2, level: -2, inputtext: "Hello", outputtext: ""},
+		{setlevel: 2, level: -1, inputtext: "Hello", outputtext: "Hello"},
 		{setlevel: 0, level: 0, inputtext: "Hello", outputtext: "Hello"},
 		{setlevel: 0, level: 1, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 2, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 3, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 4, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 5, inputtext: "Hello", outputtext: ""},
-		{setlevel: 0, level: -1, inputtext: "Hello", outputtext: ""},
+		{setlevel: 0, level: -2, inputtext: "Hello", outputtext: ""},
+		{setlevel: 0, level: -1, inputtext: "Hello", outputtext: "Hello"},
 		{setlevel: 4, level: 0, inputtext: "Hello", outputtext: "Hello"},
 		{setlevel: 4, level: 1, inputtext: "Hello", outputtext: "Hello"},
 		{setlevel: 4, level: 2, inputtext: "Hello", outputtext: "Hello"},
 		{setlevel: 4, level: 3, inputtext: "Hello", outputtext: "[V]Hello"},
 		{setlevel: 4, level: 4, inputtext: "Hello", outputtext: "[D]Hello"},
 		{setlevel: 4, level: 5, inputtext: "Hello", outputtext: ""},
-		{setlevel: 4, level: -1, inputtext: "Hello", outputtext: ""},
+		{setlevel: 4, level: -2, inputtext: "Hello", outputtext: ""},
+		{setlevel: 4, level: -1, inputtext: "Hello", outputtext: "Hello"},
 	}
 
 	tl := &testlogger{}
@@ -173,21 +181,24 @@ func TestPrintf(t *testing.T) {
 		{setlevel: 2, level: 3, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
 		{setlevel: 2, level: 4, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
 		{setlevel: 2, level: 5, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
-		{setlevel: 2, level: -1, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
+		{setlevel: 2, level: -2, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
+		{setlevel: 2, level: -1, inputtext: "Hello %v\n", parameter: 42, outputtext: "Hello 42\n"},
 		{setlevel: 0, level: 0, inputtext: "Hello %v\n", parameter: 42, outputtext: "Hello 42\n"},
 		{setlevel: 0, level: 1, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
 		{setlevel: 0, level: 2, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
 		{setlevel: 0, level: 3, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
 		{setlevel: 0, level: 4, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
 		{setlevel: 0, level: 5, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
-		{setlevel: 0, level: -1, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
+		{setlevel: 0, level: -2, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
+		{setlevel: 0, level: -1, inputtext: "Hello %v\n", parameter: 42, outputtext: "Hello 42\n"},
 		{setlevel: 4, level: 0, inputtext: "Hello %v\n", parameter: 42, outputtext: "Hello 42\n"},
 		{setlevel: 4, level: 1, inputtext: "Hello %v\n", parameter: 42, outputtext: "Hello 42\n"},
 		{setlevel: 4, level: 2, inputtext: "Hello %v\n", parameter: 42, outputtext: "Hello 42\n"},
-		{setlevel: 4, level: 3, inputtext: "Hello %v\n", parameter: 42, outputtext: "[V]Hello 42\n"},
-		{setlevel: 4, level: 4, inputtext: "Hello %v\n", parameter: 42, outputtext: "[D]Hello 42\n"},
+		{setlevel: 4, level: 3, inputtext: "Hello %v\n", parameter: 42, outputtext: "[V] Hello 42\n"},
+		{setlevel: 4, level: 4, inputtext: "Hello %v\n", parameter: 42, outputtext: "[D] Hello 42\n"},
 		{setlevel: 4, level: 5, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
-		{setlevel: 4, level: -1, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
+		{setlevel: 4, level: -2, inputtext: "Hello %v\n", parameter: 42, outputtext: ""},
+		{setlevel: 4, level: -1, inputtext: "Hello %v\n", parameter: 42, outputtext: "Hello 42\n"},
 	}
 
 	tl := &testlogger{}
@@ -228,21 +239,24 @@ func TestPrintln(t *testing.T) {
 		{setlevel: 2, level: 3, inputtext: "Hello", outputtext: ""},
 		{setlevel: 2, level: 4, inputtext: "Hello", outputtext: ""},
 		{setlevel: 2, level: 5, inputtext: "Hello", outputtext: ""},
-		{setlevel: 2, level: -1, inputtext: "Hello", outputtext: ""},
+		{setlevel: 2, level: -2, inputtext: "Hello", outputtext: ""},
+		{setlevel: 2, level: -1, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 0, level: 0, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 0, level: 1, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 2, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 3, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 4, inputtext: "Hello", outputtext: ""},
 		{setlevel: 0, level: 5, inputtext: "Hello", outputtext: ""},
-		{setlevel: 0, level: -1, inputtext: "Hello", outputtext: ""},
+		{setlevel: 0, level: -2, inputtext: "Hello", outputtext: ""},
+		{setlevel: 0, level: -1, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 4, level: 0, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 4, level: 1, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 4, level: 2, inputtext: "Hello", outputtext: "Hello\n"},
 		{setlevel: 4, level: 3, inputtext: "Hello", outputtext: "[V] Hello\n"},
 		{setlevel: 4, level: 4, inputtext: "Hello", outputtext: "[D] Hello\n"},
 		{setlevel: 4, level: 5, inputtext: "Hello", outputtext: ""},
-		{setlevel: 4, level: -1, inputtext: "Hello", outputtext: ""},
+		{setlevel: 4, level: -2, inputtext: "Hello", outputtext: ""},
+		{setlevel: 4, level: -1, inputtext: "Hello", outputtext: "Hello\n"},
 	}
 
 	tl := &testlogger{}

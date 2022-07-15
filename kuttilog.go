@@ -40,10 +40,10 @@ func Setloglevel(newlevel int) {
 	}
 }
 
-// V returns true if the specified level is between 0 and the current
+// V returns true if the specified level is between -1 and the current
 // log level, false otherwise.
 func V(level int) bool {
-	return level <= loglevel && level >= 0
+	return level <= loglevel && level >= -1
 }
 
 func printWith(printfunc func(...interface{}), level int, v ...interface{}) {
@@ -71,7 +71,7 @@ func Printf(level int, format string, v ...interface{}) {
 		prefix := logger.LevelPrefix(level)
 		if prefix != "" {
 			output := append([]interface{}{logger.LevelPrefix(level)}, v...)
-			logger.Printf("%v"+format, output...)
+			logger.Printf("%v "+format, output...)
 		} else {
 			logger.Printf(format, v...)
 		}

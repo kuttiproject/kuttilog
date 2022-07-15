@@ -21,6 +21,9 @@ func (d *defaultlogger) MaxLevel() int {
 }
 
 func (d *defaultlogger) LevelPrefix(level int) string {
+	if level == -1 {
+		return ""
+	}
 	return levelprefixes[level]
 }
 

@@ -53,9 +53,9 @@ func TestDefaultlogger(t *testing.T) {
 
 	buf.Reset()
 	Printf(Debug, "Hello %v", 42)
-	if buf.String() != "[DEBUG]Hello 42\n" {
+	if buf.String() != "[DEBUG] Hello 42\n" {
 		t.Errorf("\nDefault Logger Print error:\n  Expected: %#v\n  Got: %#v",
-			"[DEBUG]Hello 42\n",
+			"[DEBUG] Hello 42\n",
 			buf.String())
 	}
 }
