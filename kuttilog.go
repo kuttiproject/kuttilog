@@ -7,6 +7,7 @@ import (
 
 // Default Log levels
 const (
+	Error   = -1
 	Quiet   = 0
 	Minimal = 1
 	Info    = 2

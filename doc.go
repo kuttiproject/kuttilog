@@ -11,7 +11,8 @@
 //
 // Levels begin at 0, and can go up to a implemetation-specific
 // maximum. The default logger provides five levels: Quiet(0),
-// Minimal(1), Info(2), Verbose(3) and Debug(4).
+// Minimal(1), Info(2), Verbose(3) and Debug(4). The default
+// level is Info(2).
 //
 // There is also a special level: Error(-1), deliberately kept
 // below the minimum level. All implementations must ensure
