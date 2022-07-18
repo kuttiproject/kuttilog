@@ -28,14 +28,14 @@ func MaxLevel() int {
 	return logger.MaxLevel()
 }
 
-// Loglevel returns the current log level.
-func Loglevel() int {
+// LogLevel returns the current log level.
+func LogLevel() int {
 	return loglevel
 }
 
-// Setloglevel sets the current log level.
+// SetLogLevel sets the current log level.
 // If level is below 0 or greater than MaxLevel, it is not changed.
-func Setloglevel(newlevel int) {
+func SetLogLevel(newlevel int) {
 	if newlevel >= 0 && newlevel <= MaxLevel() {
 		loglevel = newlevel
 	}

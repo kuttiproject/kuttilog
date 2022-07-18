@@ -8,20 +8,20 @@ import (
 )
 
 func TestSetLogLevel(t *testing.T) {
-	defaultloglevel := kuttilog.Loglevel()
+	defaultloglevel := kuttilog.LogLevel()
 	maxloglevel := kuttilog.MaxLevel()
 	t.Logf("\nDefault log level is: %v\nMax log level is: %v", defaultloglevel, maxloglevel)
 
 	t.Logf("Trying to change to negative log level")
-	kuttilog.Setloglevel(-1)
-	if kuttilog.Loglevel() != defaultloglevel {
+	kuttilog.SetLogLevel(-1)
+	if kuttilog.LogLevel() != defaultloglevel {
 		t.Error("SetLogLevel allowed setting negative level")
 		t.FailNow()
 	}
 
 	t.Logf("Trying to change to greater than max log level")
-	kuttilog.Setloglevel(maxloglevel + 1)
-	if kuttilog.Loglevel() != defaultloglevel {
+	kuttilog.SetLogLevel(maxloglevel + 1)
+	if kuttilog.LogLevel() != defaultloglevel {
 		t.Error("SetLogLevel allowed setting level greater than max.")
 		t.FailNow()
 	}
@@ -55,7 +55,7 @@ func TestV(t *testing.T) {
 	}
 
 	for _, testrow := range testvtable {
-		kuttilog.Setloglevel(testrow.setlevel)
+		kuttilog.SetLogLevel(testrow.setlevel)
 		receivedresult := kuttilog.V(testrow.level)
 		if receivedresult != testrow.result {
 			t.Errorf(
@@ -148,7 +148,7 @@ func TestPrint(t *testing.T) {
 	kuttilog.SetLogger(tl)
 	for _, testrow := range testprinttable {
 		tl.logstring = ""
-		kuttilog.Setloglevel(testrow.setlevel)
+		kuttilog.SetLogLevel(testrow.setlevel)
 		kuttilog.Print(testrow.level, testrow.inputtext)
 		if tl.logstring != testrow.outputtext {
 			t.Errorf(
@@ -205,7 +205,7 @@ func TestPrintf(t *testing.T) {
 	kuttilog.SetLogger(tl)
 	for _, testrow := range testprintftable {
 		tl.logstring = ""
-		kuttilog.Setloglevel(testrow.setlevel)
+		kuttilog.SetLogLevel(testrow.setlevel)
 		kuttilog.Printf(testrow.level, testrow.inputtext, testrow.parameter)
 		if tl.logstring != testrow.outputtext {
 			t.Errorf(
@@ -263,7 +263,7 @@ func TestPrintln(t *testing.T) {
 	kuttilog.SetLogger(tl)
 	for _, testrow := range testprintlntable {
 		tl.logstring = ""
-		kuttilog.Setloglevel(testrow.setlevel)
+		kuttilog.SetLogLevel(testrow.setlevel)
 		kuttilog.Println(testrow.level, testrow.inputtext)
 		if tl.logstring != testrow.outputtext {
 			t.Errorf(
