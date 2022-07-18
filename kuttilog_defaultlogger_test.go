@@ -9,7 +9,7 @@ func TestDefaultlogger(t *testing.T) {
 	t.Log("Testing Default Logger...")
 	ResetLogger()
 
-	Setloglevel(Info)
+	SetLogLevel(Info)
 
 	var buf bytes.Buffer
 	defaultLogger.log.SetOutput(&buf)
@@ -49,13 +49,13 @@ func TestDefaultlogger(t *testing.T) {
 	}
 
 	// Debug output should happen at Debug level
-	Setloglevel(Debug)
+	SetLogLevel(Debug)
 
 	buf.Reset()
 	Printf(Debug, "Hello %v", 42)
-	if buf.String() != "[DEBUG]Hello 42\n" {
+	if buf.String() != "[DEBUG] Hello 42\n" {
 		t.Errorf("\nDefault Logger Print error:\n  Expected: %#v\n  Got: %#v",
-			"[DEBUG]Hello 42\n",
+			"[DEBUG] Hello 42\n",
 			buf.String())
 	}
 }

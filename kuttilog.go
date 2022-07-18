@@ -7,6 +7,7 @@ import (
 
 // Default Log levels
 const (
+	Error   = -1
 	Quiet   = 0
 	Minimal = 1
 	Info    = 2
@@ -27,23 +28,23 @@ func MaxLevel() int {
 	return logger.MaxLevel()
 }
 
-// Loglevel returns the current log level.
-func Loglevel() int {
+// LogLevel returns the current log level.
+func LogLevel() int {
 	return loglevel
 }
 
-// Setloglevel sets the current log level.
+// SetLogLevel sets the current log level.
 // If level is below 0 or greater than MaxLevel, it is not changed.
-func Setloglevel(newlevel int) {
+func SetLogLevel(newlevel int) {
 	if newlevel >= 0 && newlevel <= MaxLevel() {
 		loglevel = newlevel
 	}
 }
 
-// V returns true if the specified level is between 0 and the current
+// V returns true if the specified level is between -1 and the current
 // log level, false otherwise.
 func V(level int) bool {
-	return level <= loglevel && level >= 0
+	return level <= loglevel && level >= -1
 }
 
 func printWith(printfunc func(...interface{}), level int, v ...interface{}) {
@@ -71,7 +72,7 @@ func Printf(level int, format string, v ...interface{}) {
 		prefix := logger.LevelPrefix(level)
 		if prefix != "" {
 			output := append([]interface{}{logger.LevelPrefix(level)}, v...)
-			logger.Printf("%v"+format, output...)
+			logger.Printf("%v "+format, output...)
 		} else {
 			logger.Printf(format, v...)
 		}
