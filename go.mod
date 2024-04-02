@@ -1,3 +1,3 @@
 module github.com/kuttiproject/kuttilog
 
-go 1.18
+go 1.22
